@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "saladejuegoscoarasa": {
+      "hosting": {
+        "SalaJuejosCoarasaW": [
+          "saladejuegoscoarasa"
+        ]
+      }
+    }
+  }
+}

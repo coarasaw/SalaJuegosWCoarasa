@@ -1,0 +1,9 @@
+<nav class="site-header sticky-top py-1">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 d-none d-md-inline-block link-dark" (click)=inicio()>Inicio</a>
+      <a class="py-2 d-none d-md-inline-block link-dark" (click)=sala()>Sala de Juegos</a>
+      <a class="py-2 d-none d-md-inline-block link-dark" (click)=quienSoy()>Quien soy</a>
+      <P class="py-2 d-none d-md-inline-block"><b>Usuario:</b> {{ email }}</P>
+      <a class="py-2 d-none d-md-inline-block link-light" (click)=logOut()>Desloguearse</a>
+    </div>
+</nav>
