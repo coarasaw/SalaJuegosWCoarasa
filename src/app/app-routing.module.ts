@@ -14,6 +14,11 @@ const routes: Routes = [
         loadChildren: () => import('./modulos/juegos/juegos.module')
         .then(m => m.JuegosModule)
   },
+  { 
+    path: 'encuesta',
+        loadChildren: () => import('./modulos/encuestas/encuestas.module')
+        .then(m => m.EncuestasModule)
+  },
   { path: 'inicio', component: InicioComponent },
   { path: 'quiensoy', component: QuienSoyComponent },
   { path:'', redirectTo:'auth',pathMatch:'full' },

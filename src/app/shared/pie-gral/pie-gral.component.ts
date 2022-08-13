@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pie-gral.component.css']
 })
 export class PieGralComponent implements OnInit {
-
+  anio = getFullYear();
+  
   constructor() { }
 
   ngOnInit(): void {
   }
 
 }
+function getFullYear() {
+  var currentTime = new Date();
+  var year = currentTime.getFullYear();
+  return year;
+}
+

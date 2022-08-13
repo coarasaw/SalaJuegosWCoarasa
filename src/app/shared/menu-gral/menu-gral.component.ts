@@ -31,6 +31,14 @@ export class MenuGralComponent implements OnInit {
     
   }
 
+  encuesta(){
+    this.rutas.navigate(['encuesta'])
+  }
+
+  chat(){
+    
+  }
+
   obtener_localstorage(){
     let datoUsuario = JSON.parse(localStorage.getItem('user'));
     //console.log(datoUsuario);
