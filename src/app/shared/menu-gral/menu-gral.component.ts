@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './menu-gral.component.html',
   styleUrls: ['./menu-gral.component.css']
 })
+
 export class MenuGralComponent implements OnInit {
   email: string;
 
@@ -28,15 +29,18 @@ export class MenuGralComponent implements OnInit {
   }
   sala(){
     this.rutas.navigate(['juegos/menujuegos']);
-    
   }
 
   encuesta(){
-    this.rutas.navigate(['encuesta'])
+    this.rutas.navigate(['encuesta']);
   }
 
+  listado() {
+    this.rutas.navigate(['listado']);
+  }
+  
   chat(){
-    
+    this.rutas.navigate(['chat']);
   }
 
   obtener_localstorage(){

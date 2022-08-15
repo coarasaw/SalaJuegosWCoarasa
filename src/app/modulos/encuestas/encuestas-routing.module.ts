@@ -7,9 +7,8 @@ const routes: Routes = [
     path: '',
     component: EncuestaComponent ,
    // canActivate: [UsuarioLogueadoGuard] 
-     
   },
-  {path:'encuesta', component: EncuestaComponent , pathMatch:'full'}
+  { path:'encuesta', component: EncuestaComponent , pathMatch:'full' }
 ];
 
 @NgModule({

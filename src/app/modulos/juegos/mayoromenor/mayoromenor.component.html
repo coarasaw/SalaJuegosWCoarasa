@@ -27,7 +27,7 @@
         <button type="submit" class="col btn" *ngIf="!smsFinal" (click)="Jugar('menor')">Menor</button>
   
         <button type="submit" class="col btn" *ngIf="smsFinal" (click)="Repetir()"><i class="fas fa-undo"></i>Otro</button>
-        <button type="submit" class="col btn" *ngIf="smsFinal" [routerLink]="['/juegos/menujuegos']" routerLinkActive="router-link-active" >Salir</button>
+        <button type="submit" class="col btn" *ngIf="smsFinal" (click)="salirGame()">Salir</button>
       </div>
       <div class="text-center col-sm-4">
         <h1>Menor o Mayor</h1>

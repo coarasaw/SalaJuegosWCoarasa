@@ -42,13 +42,18 @@ export class LoginComponent implements OnInit {
     this.loginForm.controls['usuarioClave'].setValue('pepe123');
   }
 
-  loginSiguiente(){
-    console.log(this.loginForm)
-    const usuario = this.loginForm.get('usuarioCorreo')?.value;
-    const password = this.loginForm.get('usuarioClave')?.value;
+  adinistradorLogin(){
+    this.loginForm.controls['usuarioCorreo'].setValue('admin@gmail.com');
+    this.loginForm.controls['usuarioClave'].setValue('admin123');
+  }
 
-    this.loading = true;
-    this.afAuth.signInWithEmailAndPassword(usuario,password).then((respuesta) => {
+  loginSiguiente(){
+      //console.log(this.loginForm)
+      const usuario = this.loginForm.get('usuarioCorreo')?.value;
+      const password = this.loginForm.get('usuarioClave')?.value;
+
+      this.loading = true;
+      this.afAuth.signInWithEmailAndPassword(usuario,password).then((respuesta) => {
       //console.log(respuesta);
       this.loading = false;
       this.setLocalStorage(respuesta.user);

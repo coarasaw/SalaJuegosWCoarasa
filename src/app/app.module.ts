@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule} from '@angular/fire/auth';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -21,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ModulosModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule
   ],

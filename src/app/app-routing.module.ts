@@ -19,6 +19,16 @@ const routes: Routes = [
         loadChildren: () => import('./modulos/encuestas/encuestas.module')
         .then(m => m.EncuestasModule)
   },
+  { 
+    path: 'chat',
+        loadChildren: () => import('./modulos/chat/chat.module')
+        .then(m => m.ChatModule)
+  },
+  { 
+    path: 'listado',
+        loadChildren: () => import('./modulos/listados/listados.module')
+        .then(m => m.ListadosModule)
+  },
   { path: 'inicio', component: InicioComponent },
   { path: 'quiensoy', component: QuienSoyComponent },
   { path:'', redirectTo:'auth',pathMatch:'full' },

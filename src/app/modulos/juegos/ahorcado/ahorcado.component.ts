@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user';
+import { JuegoService } from 'src/app/servicios/juego.service';
+import { Juego } from '../../../clases/juego';
 
 @Component({
   selector: 'app-ahorcado',
@@ -11,10 +12,11 @@ export class AhorcadoComponent implements OnInit {
   title = 'Ahorcado';
   puntos: number = 0;
   diccPosition: number = 0;
+  emailConectado: string;
 
   //palabras en juego
-  palClave = ['AUTO','CASA','VACA','GATO','PERRO',
-                'LIBERTAD','PALABRA','OBJETO','PERDISTE','GANASTE','CALEIDOSCOPIO'];
+  palClave = ['BURRO','PATO','VACA','GATO','PERRO',
+                'JIRAFA','PANDA','ZORRO','TORTUGA','ORCA','ELEFANTE'];
 
   palabra:string = '';
   palabraOculta:string = '';
@@ -29,7 +31,9 @@ export class AhorcadoComponent implements OnInit {
             'K','L','M','N','Ñ','O','P','Q','R','S',
             'T','U','V','W','X','Y','Z'];
   
-  constructor(){
+  constructor(public _unJuego: JuegoService,
+              private rutas: Router){
+    this.emailConectado = this.obtener_localstorage();
     this.selectWord();
   }
 
@@ -60,18 +64,19 @@ export class AhorcadoComponent implements OnInit {
   winVerification(){
     const WordArray = this.palabraOculta.split(' ');
     const WordString = WordArray.join('');
+    
     if(WordString == this.palabra){
-
+      
       //this.res.agregarResultado('Win', 'Ahorcado');
 
       this.message = 'Ganaste';
-      this.puntos =+ 1;
+      this.puntos += 1;
       this.win = true;
       this.hideInterface();
     }
 
     if(this.intntoes_usuarios >= this.intentos){
-
+      
       //this.res.agregarResultado('Lose', 'Ahorcado');
 
       this.intntoes_usuarios = 8;
@@ -109,4 +114,23 @@ export class AhorcadoComponent implements OnInit {
     this.selectWord();
   }
 
+  obtener_localstorage(){
+    let datoUsuario = JSON.parse(localStorage.getItem('user'));
+    //console.log(datoUsuario);
+    return datoUsuario.email;
+  }
+
+  salirGame(){
+    let date = new Date();
+    let fechaActual = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+
+    const puntajeJuego: Juego = {
+      uemailJuego: this.emailConectado,
+      nombreJuego: 'Ahorcado',
+      puntajeJuego: this.puntos.toString(),
+      fechaJuego: fechaActual
+    }
+    this._unJuego.crearJuego(puntajeJuego);
+    this.rutas.navigate(['juegos/menujuegos']);
+  }
 }

@@ -1,7 +1,7 @@
 export class Encuesta {
     
-    public uid: string = '';
-    public umail: string = '';
+    //public uid: string = '';
+    public uemail: string = '';
     public nombre: string = '';
     public apellido: string = '';
     public edad: string = '';

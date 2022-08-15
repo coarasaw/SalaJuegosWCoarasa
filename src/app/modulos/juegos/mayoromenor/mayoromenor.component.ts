@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { JuegoService } from 'src/app/servicios/juego.service';
+import { Juego } from '../../../clases/juego';
 
 @Component({
   selector: 'app-mayoromenor',
@@ -7,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MayoromenorComponent implements OnInit {
 
+  emailConectado: string;
   puntos: number = 0;
 
   vidas: number = 5;
@@ -24,8 +28,11 @@ export class MayoromenorComponent implements OnInit {
   mensajeFinal: string = '';
   smsFinal: boolean = false;
 
-  constructor() { 
+  constructor(public _unJuego: JuegoService,
+    private rutas: Router){
+     
     this.numero = this.arrayNumeros[Math.floor(Math.random() * this.arrayNumeros.length)];
+    this.emailConectado = this.obtener_localstorage();
   }
 
   ngOnInit(): void {
@@ -104,4 +111,23 @@ export class MayoromenorComponent implements OnInit {
 
   }
 
+  obtener_localstorage(){
+    let datoUsuario = JSON.parse(localStorage.getItem('user'));
+    //console.log(datoUsuario);
+    return datoUsuario.email;
+  }
+
+  salirGame(){
+    let date = new Date();
+    let fechaActual = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+
+    const puntajeJuego: Juego = {
+      uemailJuego: this.emailConectado,
+      nombreJuego: 'MayoroMeno',
+      puntajeJuego: this.puntos.toString(),
+      fechaJuego: fechaActual
+    }
+    this._unJuego.crearJuego(puntajeJuego);
+    this.rutas.navigate(['juegos/menujuegos']);
+  }
 }

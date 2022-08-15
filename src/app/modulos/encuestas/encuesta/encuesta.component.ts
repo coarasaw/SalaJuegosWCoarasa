@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-//import { EncuestaService } from 'src/app/servicios/encuesta.service';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import Swal from 'sweetalert2';
+import { Encuesta } from '../../../clases/encuesta';
 
 @Component({
   selector: 'app-encuesta',
@@ -15,14 +16,15 @@ export class EncuestaComponent implements OnInit {
   public formulario!: FormGroup;
   public encuesta?: Observable<any[]>;
   public elemento: any;
+  emailConectado: string;
 
   constructor(
     private router: Router,
     private frB: FormBuilder, 
-    //public unaEncuesta: EncuestaService,
+    public _unaEncuesta: EncuestaService,
   ) 
   { 
-    //this.unaEncuesta.cargarEncuestas().subscribe( () => { });
+    this.emailConectado = this.obtener_localstorage();
   }
 
   ngOnInit(): void {
@@ -39,30 +41,24 @@ export class EncuestaComponent implements OnInit {
   }
 
   aceptar(): void {
-    // console.log(this.forma);
-    // console.log(this.forma.getRawValue()); //te devuelve un JSON
-    // console.log(this.forma.get('nombre').value); //te da un campo puntual
-    // console.log(this.forma.controls['nombre'].value); //te da un campo puntual otra forma
-
-    var nombre = this.formulario?.controls['nombre'].value;
-    var apellido = this.formulario?.controls['apellido'].value;
-    var edad = this.formulario?.controls['edad'].value;
-    var telefono = this.formulario?.controls['telefono'].value;
-    var juego = this.obtenerValor(this.formulario?.controls['juego'].value);
-    var puntuacion = this.formulario?.controls['puntuacion'].value;
-    var opinion = this.formulario?.controls['opinion'].value;
-    var terminos = this.formulario?.controls['terminos'].value;
-
     
-   /*  this.unaEncuesta.agregarEncuesta(nombre, apellido, edad, telefono, juego, puntuacion, opinion, terminos)?.finally( () =>{
-            this.muestraMensaje("correcta");
-
+    const encuestaDatos: Encuesta = {
+      uemail: this.emailConectado,
+      nombre: this.formulario?.controls['nombre'].value,
+      apellido: this.formulario?.controls['apellido'].value,
+      edad: this.formulario?.controls['edad'].value,
+      telefono: this.formulario?.controls['telefono'].value,
+      juego: this.obtenerValor(this.formulario?.controls['juego'].value),
+      puntuacion: this.formulario?.controls['puntuacion'].value,
+      opinion: this.formulario?.controls['opinion'].value,
+      terminos: this.formulario?.controls['terminos'].value
+    }
+    
+    this._unaEncuesta.crearEncuesta(encuestaDatos).then(data => {
+      this.muestraMensaje("correcta");
           }).catch( (err: any) => {
-
             this.muestraMensaje("error");
-            
-
-          }); */
+    });
   }
 
   obtenerValor(juego: string): string {
@@ -74,7 +70,7 @@ export class EncuestaComponent implements OnInit {
         juego = "Mayor o Menor";
         break;
       case 'C':
-        juego = "Colores";
+        juego = "Como se Juega";
         break;
       case 'P':
         juego = "Preguntados";
@@ -92,7 +88,7 @@ export class EncuestaComponent implements OnInit {
         title: '¡Muchas gracias por su tiempo!',
         text: 'Encuesta enviada exictosamente! ',
       }).finally(()=>{
-        this.router.navigate(['/home']);
+        this.router.navigate(['/inicio']);
       });
     }
     if(aux == "error"){
@@ -101,8 +97,14 @@ export class EncuestaComponent implements OnInit {
         title: 'ERROR!',
         text: 'Ocurrio un error en la carga de la encuesta',
       }).finally(()=>{
-        this.router.navigate(['/home']);
+        this.router.navigate(['/inicio']);
       });
     }
+  }
+
+  obtener_localstorage(){
+    let datoUsuario = JSON.parse(localStorage.getItem('user'));
+    //console.log(datoUsuario);
+    return datoUsuario.email;
   }
 }
