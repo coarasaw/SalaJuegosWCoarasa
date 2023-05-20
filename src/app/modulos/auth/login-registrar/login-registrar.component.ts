@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorService } from 'src/app/servicios/error.service';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-login-registrar',
@@ -16,7 +17,7 @@ export class LoginRegistrarComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private afAuth : AngularFireAuth,
-              private router: Router,
+              private rutas:Router,
               private toastr: ToastrService,
               private _errorService: ErrorService) { 
 
@@ -36,7 +37,9 @@ export class LoginRegistrarComponent implements OnInit {
     this.loading = true;
     this.afAuth.createUserWithEmailAndPassword(usuario,password).then(rta => {
       this.toastr.success('El usuario fue registrado con exito!', 'Usuario registrado!');
-      this.router.navigate(['/home'])
+      this.loading = false;
+      this.setLocalStorage(rta.user);
+      this.rutas.navigate(['/inicio']);
     }).catch(error => {
       this.registrarForm.reset();
       this.loading = false;
@@ -48,5 +51,13 @@ export class LoginRegistrarComponent implements OnInit {
     const pass = group.controls.password?.value;
     const confirmarPassword = group.controls.repetirPassword?.value;
     return pass === confirmarPassword ? null : { notSame: true }
+  }
+
+  setLocalStorage(user: any){
+    const usuario: User = {
+      uid: user.uid,
+      email: user.email
+    }
+    localStorage.setItem('user', JSON.stringify(usuario)); 
   }
 }
